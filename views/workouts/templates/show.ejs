@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= workout.title %>
+    </title>
+</head>
+
+<body>
+
+
+        <h1>
+            <%=workout.title %>
+        </h1>
+        
+        <ul>
+            <% workout.exercises.forEach(exercise => { %>
+             <li>
+                <%= exercise %>
+             </li>
+            <% }) %>
+             
+        </ul>
+        
+ 
+    <form action="/workouts?templateName=<%= templateName %>" method="POST">
+        <button type="submit">Create workout on template</button>
+    </form>
+</body>
+
+</html>

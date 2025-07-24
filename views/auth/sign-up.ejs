@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+</head>
+<body>
+  <%- include('../partials/nav.ejs') %>
+  
+  <h1>GYM BURST</h1>
+  <p>your own personal coach!</p>
+  <form class="form" action="/auth/sign-up" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required />
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required />
+    
+    <label for="confirmPassword">Confirm Password:</label>
+    <input 
+      type="password"
+      name="confirmPassword"
+      id="confirmPassword"
+      required 
+    />
+    <% if (message) { %>
+      <p class="error-message"><%= message %></p>
+    <% } %>
+    <button type="submit">Sign up</button>
+    <p>Already have an account? <a href="/auth/sign-in">Sign in</a></p>
+  </form>
+</body>
+</html>

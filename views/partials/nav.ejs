@@ -1,0 +1,11 @@
+<nav>
+  <% if (user) { %>
+  <a href="/workouts">View all workouts</a>
+  <a href="/workouts/new">Add a workout</a>
+  <a href="/auth/sign-out">Sign Out</a>
+  <a href="/users/personal">personal chosen workouts</a>
+  <% } else { %>
+  <a href="/auth/sign-up">Sign Up</a>
+  <a href="/auth/sign-in">Sign In</a>
+  <% } %>
+</nav>

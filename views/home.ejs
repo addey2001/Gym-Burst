@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Home page</title>
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <% if (message) { %>
+        <p class="success-message"><%= message %></p>
+    <% } %>
+    <% if (user) { %>
+        <h1>welcome to GYM BURST <%= user.username %>!</h1>
+        <h2>Pick Your workout</h2>
+    <ul>
+        <li>Chest</li>
+        <li>Arms </li>
+        <li>Shoulder</li>
+        <li>Back</li>
+        <li>Legs</li>
+
+    </ul>
+        
+        <p>
+            <a href="/auth/sign-out">Sign out</a>
+        </p>
+<% } else { %>
+    <h1>your new? Let our journey begin</h1>
+    <p>
+        <a href="/auth/sign-up">Sign up</a>
+        <a href="auth/sign-in">Sign In</a>
+    
+    </p>
+    <% } %>
+</body>
+</html>
