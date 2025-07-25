@@ -38,6 +38,12 @@ app.use(passUserToView)
 app.use(passMessageToView)
 
 
+//NETLIFY
+const  MONGODB_URI: 'mongodb+srv://addey2001:Mofelewa1@seb.4c3oeas.mongodb.net/Gym-Burst?retryWrites=true&w=majority&appName=SEB'
+const SESSION_SECRET:'Cluster1'
+
+
+
 
 
 //--------server connection-------
