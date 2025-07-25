@@ -1,3 +1,4 @@
+import serverless from 'serverless-http'
 import express from 'express'
 import 'dotenv/config'
 import MongoStore from 'connect-mongo'
@@ -7,12 +8,12 @@ import morgan from 'morgan'
 import methodOverride from 'method-override'
 
 //routers
-import authRouter from './controllers/auth.js'
-import workoutRouter from './controllers/workouts.js'
-import userRouter from './controllers/users.js'
-import User from './models/user.js'
-import passUserToView from './middleware/passUsertoView.js'
-import passMessageToView from './middleware/passMessagetoView.js'
+import authRouter from '../../controllers/auth.js'
+import workoutRouter from '../../controllers/workouts.js'
+import userRouter from '../../controllers/users.js'
+import User from '../../models/user.js'
+import passUserToView from '../../middleware/passUsertoView.js'
+import passMessageToView from '../../middleware/passMessagetoView.js'
 
 //--------const------------
 const app = express()
@@ -46,9 +47,7 @@ mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`)
 })
 
-app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`)
-})
+
 
 //-------- routes section --------
 app.use('/auth', authRouter)
@@ -80,6 +79,7 @@ if(err.renderForm){
   return res.status(500).render('errors/error-page.ejs')
 
 })
+export const handler = serverless(app)
 
 
 

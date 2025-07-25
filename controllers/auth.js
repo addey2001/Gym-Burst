@@ -62,9 +62,9 @@ req.session.save(() => {
 router.post('/sign-in', async (req, res, next) => {
     try {
         const {username, password, confirmPassword} = req.body
-
+console.log(username, password)
     
-        const existUser = await User.findOne({ usernme: username })
+        const existUser = await User.findOne({ username: username })
         if (!existUser)throw new Error('wrong username or password, try again')
 //checks if passwords match
             if(!bcrypt.compareSync(password, existUser.password)) {
@@ -85,7 +85,7 @@ router.post('/sign-in', async (req, res, next) => {
 
 //sign- out 
 
-router.get('sign-out', (req, res) => {
+router.get('/sign-out', (req, res) => {
     try{
         req.session.destroy(() => {
             res.redirect('/auth/sign-in')

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= workout.title %>
-    </title>
-    <%- include('../../partials/stylesheets.ejs') %>
-    <style>
-        body {
+    <title><%= workout.title %></title>
+        <%- include('../partials/stylesheets.ejs') %>
+        <style>
+             body {
             background: linear-gradient(to bottom, #1a237e, #0d133d);
             color: #fff;
             font-family: 'Montserrat', Arial, sans-serif;
@@ -22,27 +19,34 @@
             font-weight: 700;
             font-size: 2rem;
         }
-        ul {
+        .exercise-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 25px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            padding: 30px 40px;
             max-width: 600px;
             margin: 40px auto 0 auto;
-            padding: 0;
-            list-style: disc inside;
         }
-        li {
-            background: #6ec6ff;
-            color: #222;
-            border-radius: 15px;
-            margin-bottom: 18px;
-            padding: 18px 24px;
+        ul {
+            list-style: disc inside;
+            padding-left: 0;
+            margin: 0;
+        }
+         li {
             font-size: 1.1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            color: #fff;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        li:last-child {
+            border-bottom: none;
         }
         form {
             text-align: center;
             margin-top: 30px;
         }
-          button {
+        button {
             background: #6ec6ff;
             color: #222;
             border: none;
@@ -53,39 +57,28 @@
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             transition: background 0.2s;
-            margin: 0 10px;
         }
         button:hover {
             background: #2196f3;
             color: #fff;
         }
-    </style>
+        </style>
+   
+
 </head>
 
-
 <body>
-<%- include('../../partials/nav.ejs') %>
-
-        <h1>
-            <%=workout.title %>
-        </h1>
-        
-        <ul>
-            <% workout.exercises.forEach(exercise => { %>
-             <li>
-                <%= exercise %>
-             </li>
-            <% }) %>
-             
-        </ul>
-        
- 
-    <form action="/workouts?templateName=<%= templateName %>" method="POST">
-        <button type="submit">Create workout on template</button>
-    </form>
-
-  
+    <h1><%= workout.title %></h1>
+    <ul> 
+       <%workout.exercises.forEach(exercise => { %>
+        <li>
+            <%= exercise %>
+        </li>
+        <% }) %>
+    </ul>
+   <form action="/workouts/<%= workout._id %>?_method=DELETE" method="POST">
+<button type="submit">Delete</button>
+   </form>
     
 </body>
-
 </html>

@@ -4,6 +4,7 @@
 import express from 'express'
 import Workout from '../models/workout.js'
 import isSignedIn from '../middleware/isSignedIn.js'
+import { isObjectIdOrHexString } from 'mongoose'
 
 const router = express.Router()
 
@@ -63,7 +64,7 @@ shoulders: {
         'Name:Face pulls , Sets: 3, Reps: 8'
        ]
 }
-    },
+    }
 
  
 
@@ -82,7 +83,7 @@ router.get('/templates/:templateName', async (req, res, next) => {
 
 
 })
-
+//create logic
 router.post('', isSignedIn, async (req, res, next) => {
 
     try{
@@ -94,7 +95,7 @@ router.post('', isSignedIn, async (req, res, next) => {
 
     const workout = await Workout.create(templateToUse)
 
-    return res.redirect(`/workouts/${workout.id}/edit`)
+    return res.redirect(`/workouts/${workout._id}/edit`)
 
 
 } catch (error) {
@@ -110,7 +111,7 @@ router.post('', isSignedIn, async (req, res, next) => {
 router.get('', async (req, res, next) => {
     try {
         const workouts = await Workout.find()
-        return ('views/home.ejs', { workouts })
+        return res.render('workouts/index.ejs', { workouts })
     } catch (error) {
         next(error)
     }
@@ -126,7 +127,78 @@ router.get('/new', isSignedIn, (req, res, next) => {
         next(error)
     }
 })
+//show 
+router.get('/:workoutId', isSignedIn , async (req, res,next) =>{
+try {
+    const { workoutId } = req.params
 
+const workout = await Workout.findById(workoutId)
+   return res.render('workouts/show.ejs', {workout}) 
+} catch (error) {
+    next (error)
+}
+})
+
+
+//edit form
+router.get('/:templateId/edit', isSignedIn, async (req, res, next) => {
+    try{
+        const {templateId} = req.params
+        const workout = await Workout.findById(templateId)
+
+        if (!workout.user.equals(req.session.user._id)) {
+            return res.status(403).send('You are not allowed access to this resourc')
+        }
+      return res.render('workouts/edit.ejs', {workout})
+    }catch (error) {
+        next(error)
+    }
+
+})
+
+
+// update route 
+router.put('/:templateId', isSignedIn, async (req, res, next) => {
+    try{
+        const { templateId} = req.params
+        const { title, exercises } = req.body
+        const workoutToUpdate = await Workout.findById(templateId)
+        if (!workoutToUpdate.user.equals(req.session.user._id)) {
+            return res.status(403).send('You are not allowed access to this resource')
+        }
+        workoutToUpdate.title = title
+        workoutToUpdate.exercises = exercises
+        await workoutToUpdate.save()
+console.log(req.body)
+return res.redirect(`/workouts/${workoutToUpdate._id}`)
+    } catch (error) {
+        next(error)
+    }
+})
+
+//delete route
+router.delete('/:templateId', isSignedIn, async (req, res, next) => {
+    try {
+        const {templateId} = req.params
+         const workoutToDelete = await Workout.findById(templateId)
+
+         if (!workoutToDelete) {
+            return next()
+         }
+
+         if (!workoutToDelete.user.equals(req.session.user._id)) {
+            return res.status(403).send('you are not allowed access to these resources')
+         }
+         console.log(req)
+
+        await workoutToDelete.deleteOne()
+
+    return res.redirect('/workouts')
+
+    } catch (error) {
+        next (error)
+    }
+})
 
 
 

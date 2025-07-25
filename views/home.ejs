@@ -4,34 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Home page</title>
+     <%- include('./partials/stylesheets.ejs') %>
+     <style>
+         body {
+            background: linear-gradient(to bottom, #1a237e, #0d133d);
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 700;
+        }
+        .workout-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .workout-card {
+            background: #6ec6ff;
+            color: #222;
+            border-radius: 20px;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }.workout-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+        .workout-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .success-message {
+            text-align: center;
+            color: #00e676;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #bdbdbd;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        a {
+            color: inherit;
+        }
+     </style>
 </head>
+
+
 <body>
     <%- include('./partials/nav.ejs') %>
+
 
     <% if (message) { %>
         <p class="success-message"><%= message %></p>
     <% } %>
     <% if (user) { %>
-        <h1>welcome to GYM BURST <%= user.username %>!</h1>
+         <h1>welcome to GYM BURST <%= user.username %>!</h1>
         <h2>Pick Your workout</h2>
-    <ul>
-        <li>Chest</li>
-        <li>Arms </li>
-        <li>Shoulder</li>
-        <li>Back</li>
-        <li>Legs</li>
-
-    </ul>
-        
-        <p>
-            <a href="/auth/sign-out">Sign out</a>
+        <div class="workout-selection">
+            <a class="workout-card" href="/workouts/templates/chest">
+                <span class="workout-icon">&#128100;</span>
+                Chest
+            </a>
+            <a class="workout-card" href="/workouts/templates/arms">
+                <span class="workout-icon">&#128170;</span>
+                Arms
+            </a>
+            <a class="workout-card" href="/workouts/templates/shoulders">
+                <span class="workout-icon">&#128104;</span>
+                Shoulder
+            </a>
+            <a class="workout-card" href="/workouts/templates/Back">
+                <span class="workout-icon">&#128099;</span>
+                Back
+            </a>
+            <a class="workout-card" href="/workouts/templates/legs">
+                <span class="workout-icon">&#128095;</span>
+                Legs
+            </a>
+        </div>
+        <p style="text-align:center; margin-top:30px;">
+            <a href="/auth/sign-out" style="color:#fff; text-decoration:underline;">Sign out</a>
         </p>
-<% } else { %>
-    <h1>your new? Let our journey begin</h1>
-    <p>
-        <a href="/auth/sign-up">Sign up</a>
-        <a href="auth/sign-in">Sign In</a>
-    
+        <div class="footer">
+            &copy; 2025 GYMBURST. ALL RIGHTS RESERVED
+        </div>
+    <% } else { %>
+        <h1>your new? Let our journey begin</h1>
+        <p style="text-align:center;">
+            <a href="/auth/sign-up" style="color:#6ec6ff; text-decoration:underline;">Sign up</a>
+            <a href="/auth/sign-in" style="color:#6ec6ff; text-decoration:underline; margin-left:20px;">Sign In</a>
     </p>
     <% } %>
 </body>

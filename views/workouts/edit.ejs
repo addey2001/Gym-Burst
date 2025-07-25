@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit a workout</title>
+     <%- include('../partials/stylesheets.ejs') %>
+</head>
+<style>
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;    
+}
+input[type="text"]:focus {
+    border-color: #6ec6ff;
+    outline: none;
+}
+button {
+    background: #6ec6ff;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;    
+}    
+button:hover {
+    background: #5ab0e6;
+}
+button:active {
+    background: #4a9acb;
+}
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 700;
+    font-size: 2rem;
+}     
+body {
+    background: linear-gradient(to bottom, #1a237e, #0d133d);
+    color: #fff;
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+form {
+    max-width: 600px;
+    margin: 0 auto;         
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}    
+input[type="text"] {
+    margin-bottom: 20px;
+}
+
+
+
+
+</style>
+
+<body>
+    <%- include('../partials/nav.ejs') %>
+
+    <h1>Editing <%= workout.title %></h1>
+
+    <form action="/workouts/<%= workout._id %>?_method=PUT" method="POST">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="<%= workout.title %>">
+ 
+        <label for="exercises">Exercises</label>
+        <% workout.exercises.forEach(exercise => { %>
+                 
+        <input type="text" name="exercises" id="exercises" value="<%= exercise %>">
+         
+        <% }) %>
+<button type="submit">Confirm changes</button>
+    </form>
+
+    
+</body>
+</html>
